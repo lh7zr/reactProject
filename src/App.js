@@ -3,7 +3,7 @@ class App extends Component{
     render() {
         return (
             <div>
-                Hello 霖霏晗
+                heloo linfeihan
             </div>
         )
     }
