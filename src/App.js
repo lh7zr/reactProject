@@ -11,9 +11,9 @@ class App extends Component{
     render() {
         return (
             <Fragment>
-
                 <div>
-                    <input className="input" value={this.state.inputValue} onChange={this.inputChange.bind(this)}/>
+                    <label htmlFor="addserve">加入服务：</label>
+                    <input id='addserve' className="input" value={this.state.inputValue} onChange={this.inputChange.bind(this)}/>
                     <button onClick={this.addList.bind(this)}> 选择人物 </button>
                 </div>
                 <ul>
