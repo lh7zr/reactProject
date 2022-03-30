@@ -1,5 +1,6 @@
 import React,{Component,Fragment} from "react";
 import './style.css'
+import MenuItem from "./MenuItem";
 class App extends Component{
     constructor(props) {
         super(props)//调用父类的构造函数，固定写法
@@ -11,6 +12,7 @@ class App extends Component{
     render() {
         return (
             <Fragment>
+                <MenuItem />
                 <div>
                     <label htmlFor="addserve">加入服务：</label>
                     <input id='addserve' className="input" value={this.state.inputValue} onChange={this.inputChange.bind(this)}/>
