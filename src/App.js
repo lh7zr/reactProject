@@ -32,6 +32,9 @@ class App extends Component{
             </Fragment>
         )
     }
+    /**
+     * 输入框onchange事件
+     * **/
     inputChange(e){
        this.setState(
            {inputValue: e.target.value}
@@ -46,6 +49,11 @@ class App extends Component{
     /**删除**/
     deleteItem(index){
         console.log(index,'index')
+        let list = this.state.list
+        list.splice(index,1)
+        this.setState({
+            list:list
+        })
     }
 }
 export  default App
