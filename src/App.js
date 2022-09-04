@@ -1,59 +1,101 @@
-import React,{Component,Fragment} from "react";
-import './style.css'
-import MenuItem from "./MenuItem";
-class App extends Component{
-    constructor(props) {
-        super(props)//调用父类的构造函数，固定写法
-        this.state={
-            inputValue:'', //input中的值
-            list:['林思意','鞠婧祎','陆婷']
+import React, {Component} from 'react';
+
+class App extends Component {
+    constructor() {
+        super()
+        this.state = {
+            txt: '',
+            content: '',
+            contents: []
         }
     }
+
+    /**
+     * 通过条件渲染评论列表
+     * **/
+    renderList() {
+        /*return this.state.contents.length === 0
+            ?
+            (<div>暂无评论，快去评论吧</div>)
+            :
+            (<ul>
+                {
+                    this.state.contents.map(item =>
+                        <li key={item.id}>
+                            <h3>评论人： {item.name}</h3>
+                            <p>评论内容： {item.content}</p>
+                        </li>
+                    )
+                }
+            </ul>)*/
+        if (this.state.contents.length === 0) {
+            return <div>暂无评论，快去评论吧</div>
+        }
+        return (<ul>
+            {
+                this.state.contents.map(item =>
+                    <li key={item.id}>
+                        <h3>评论人： {item.name}</h3>
+                        <p>评论内容： {item.content}</p>
+                    </li>
+                )
+            }
+        </ul>)
+
+    }
+
+    /*处理表单元素值*/
+    handleForm = (e) => {
+        const {name, value} = e.target
+        this.setState({
+            [name]: value
+        })
+    }
+    /*发表评论*/
+    addForm = () => {
+        const {txt, content, contents} = this.state
+        //非空校验
+        if(txt.trim() ==='' || content.trim() === ''){
+            alert('请输入评论人和评论内容')
+            return
+        }
+        const newcontents = [
+            {
+                id: Math.random(),
+                name: txt,
+                content: content
+            },
+            ...contents
+        ]
+        this.setState({
+            txt:'',
+            content:'',
+            contents: newcontents
+        })
+    }
+
     render() {
+        const {txt, content} = this.state
         return (
-            <Fragment>
-                <MenuItem />
+            <div>
                 <div>
-                    <label htmlFor="addserve">加入服务：</label>
-                    <input id='addserve' className="input" value={this.state.inputValue} onChange={this.inputChange.bind(this)}/>
-                    <button onClick={this.addList.bind(this)}> 选择人物 </button>
+                    <input name='txt' placeholder='请输入评论人' type="text" value={txt}
+                           onChange={this.handleForm}/>
+                    <br/>
+                    <textarea name='content' value={content} onChange={this.handleForm}
+                              placeholder={'请输入评论内容'} clos={30} rows={10}></textarea>
+                    <br/>
+                    <button onClick={this.addForm}>发表意见</button>
                 </div>
-                <ul>
-                    {
-                        this.state.list.map((item,index)=>{
-                            return (
-                                <li
-                                    key={index+item}
-                                    onClick={this.deleteItem.bind(this)}>{item}</li>
-                            )
-                        })
-                    }
-                </ul>
-            </Fragment>
+                {/* 通过条件渲染显示 */}
+                {
+                    this.renderList()
+                }
+
+
+            </div>
         )
     }
-    /**
-     * 输入框onchange事件
-     * **/
-    inputChange(e){
-       this.setState(
-           {inputValue: e.target.value}
-       )
-    }
-    /**添加**/
-    addList(){
-        this.setState({
-            list:[...this.state.list,this.state.inputValue]
-        })
-    }
-    /**删除**/
-    deleteItem(index){
-        console.log(index,'index')
-        let list = this.state.list
-        list.splice(index,1)
-        this.setState({
-            list:list
-        })
-    }
 }
-export  default App
+
+export default App
